@@ -1,3 +1,7 @@
+/// A console/commandline client to test if the Hexadoku solver using
+/// recursion&backtracking strategy works
+/// Author: yang.wilby@gmail.com
+/// DateTime: 2019-04-30
 
 import 'package:dartsudo/hexadoku.dart' as hexadoku;
 import 'dart:io';

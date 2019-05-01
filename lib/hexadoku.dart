@@ -1,9 +1,6 @@
-/**
- * A Backtracking approach in Dart language to solve Hexadoku problem
- * Author: yang.wilby@gmail.com
- * DateTime: 2019-04-30
- */
-
+/// A recursion&backtracking approach in Dart language to solve Hexadoku grid
+/// Author: yang.wilby@gmail.com
+/// DateTime: 2019-04-30
 
 /// UNASSIGNED is used for empty cells in hexadoku grid
 const UNASSIGNED = 32; //32 is the rune code for whitespace
