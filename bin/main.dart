@@ -1,5 +1,5 @@
 
-import 'package:dartsudo/hexadoku.dart';
+import 'package:dartsudo/hexadoku.dart' as hexadoku;
 import 'dart:io';
 import 'package:args/args.dart';
 
@@ -47,45 +47,23 @@ main(List<String> arguments) async {
   } else { //from file
     hexaToSolve = await File(source).readAsString();
   }
-  assureInputValid(hexaToSolve);
+  String check = hexadoku.assureInputValid(hexaToSolve);
+  if (check.isNotEmpty) {
+    stderr.writeln('error: the line $check is in wrong format');
+    exit(2);
+  }
 
-  final hexa = Hexadoku(hexaToSolve);
+  final hexa = hexadoku.Hexadoku(hexaToSolve);
 
   //record how much time is consumed for the searching
   final stopwatch = Stopwatch()..start();
 
   if (hexa.SolveSudoku()) {
-    printResult(hexa.grid);
+    hexadoku.printResult(hexa.grid);
   }
   print('time spent: ${stopwatch.elapsed}');
 
 }
 
-// make sure the input follows right rule that will be used for parsing
-void assureInputValid(String hexa) {
-  var split = hexa.split('\n');
-  // start with '|', then 4 digits of hexa code or whitespace, repeating 4 times,
-  // and then an ending '|'
-  var regExp = RegExp(r"^(\|[0123456789ABCDEF\s]{4}){4}\|");
-  for (var line in split) {
-    if (line.startsWith('|') && !regExp.hasMatch(line)) {
-      stderr.writeln('error: the line $line is in wrong format');
-      exit(2);
-    }
-  }
-}
 
-void printResult(List<List<int>> matrix) {
-  print("--------------------------------");
-  matrix.forEach((List<int> row) {
-    List<String> rowStr = List();
-    row.forEach((rune) {
-      rowStr.add(String.fromCharCode(rune));
-    });
-
-    print(rowStr.join(" "));
-
-  });
-  print("--------------------------------");
-}
 

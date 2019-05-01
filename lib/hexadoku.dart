@@ -6,7 +6,6 @@
 
 
 /// UNASSIGNED is used for empty cells in hexadoku grid
-
 const UNASSIGNED = 32; //32 is the rune code for whitespace
 
 /// N is used for size of grid. Size will be NxN
@@ -143,4 +142,33 @@ class Hexadoku {
     return false;
   }
 
+}
+
+// make sure the input follows right rule that will be used for parsing
+String assureInputValid(String hexa) {
+  var split = hexa.split('\n');
+  // start with '|', then 4 digits of hexa code or whitespace, repeating 4 times,
+  // and then an ending '|'
+  var regExp = RegExp(r"^(\|[0123456789ABCDEF\s]{4}){4}\|");
+  for (var line in split) {
+    if (line.startsWith('|') && !regExp.hasMatch(line)) {
+      return line;
+
+    }
+  }
+  return '';
+}
+
+void printResult(List<List<int>> matrix) {
+  print("--------------------------------");
+  matrix.forEach((List<int> row) {
+    List<String> rowStr = List();
+    row.forEach((rune) {
+      rowStr.add(String.fromCharCode(rune));
+    });
+
+    print(rowStr.join(" "));
+
+  });
+  print("--------------------------------");
 }
