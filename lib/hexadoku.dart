@@ -1,12 +1,9 @@
-/**
- * A Backtracking approach in Dart language to solve Hexadoku problem
- * Author: yang.wilby@gmail.com
- * DateTime: 2019-04-30
- */
+/// A recursion&backtracking approach in Dart language to solve Hexadoku problem
+/// Author: yang.wilby@gmail.com
+/// DateTime: 2019-04-30
 
-
-/// UNASSIGNED is used for empty cells in hexadoku grid
-const UNASSIGNED = 32; //32 is the rune code for whitespace
+/// UNFILLED is used for empty cells in hexadoku grid
+const UNFILLED = 32; //32 is the rune code for whitespace
 
 /// N is used for size of grid. Size will be NxN
 const N = 16;
@@ -35,7 +32,7 @@ class Hexadoku {
     this.grid = List.generate(N, (int row) {
       return List.generate(N, (int column) {
         int index = row * N + column;
-        // use UNASSIGNED to represent empty cells
+        // use UNFILLED to represent empty cells
         return sequence[index];
       });
     });
@@ -46,7 +43,7 @@ class Hexadoku {
 
 
   // the backbone here, use recursion and Backtracking strategy to solve the problem
-  bool SolveSudoku() {
+  bool solveSudoku() {
     if (!_findUnassignedLocation()) {
       return true; // success!
     }
@@ -64,11 +61,11 @@ class Hexadoku {
         grid[row][column] = num;
 
         // return, if success, yay!
-        if (SolveSudoku()) {
+        if (solveSudoku()) {
           return true;
         }
         // failure, unmake & try again
-        grid[row][column] = UNASSIGNED;
+        grid[row][column] = UNFILLED;
       }
     }
     return false; // backtracking
@@ -93,7 +90,7 @@ class Hexadoku {
   bool _findUnassignedLocation() {
     for (var row = 0; row < N; row++) {
       for (var col = 0; col < N; col++) {
-        if (grid[row][col] == UNASSIGNED) {
+        if (grid[row][col] == UNFILLED) {
           toFillRow = row;
           toFillColumn = col;
           return true;

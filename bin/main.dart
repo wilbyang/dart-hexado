@@ -1,4 +1,9 @@
 
+/// A console/commandline client to test if the Hexadoku solver using
+/// recursion&backtracking strategy works
+/// Author: yang.wilby@gmail.com
+/// DateTime: 2019-04-30
+
 import 'package:dartsudo/hexadoku.dart' as hexadoku;
 import 'dart:io';
 import 'package:args/args.dart';
@@ -29,6 +34,8 @@ const String hardCodedHexaIncomplete = """
 """;
 
 main(List<String> arguments) async {
+  print("0123456789ABCDEF".runes);
+  return;
 
   String hexaToSolve;
   ArgResults argResults;
@@ -58,7 +65,7 @@ main(List<String> arguments) async {
   //record how much time is consumed for the searching
   final stopwatch = Stopwatch()..start();
 
-  if (hexa.SolveSudoku()) {
+  if (hexa.solveSudoku()) {
     hexadoku.printResult(hexa.grid);
   }
   print('time spent: ${stopwatch.elapsed}');
