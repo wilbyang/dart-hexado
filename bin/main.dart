@@ -79,7 +79,7 @@ main(List<String> arguments) async {
     }
   }
 
-  // this is an sudoku
+  // this is a sudoku
   final sudoku = doku.Doku(sequence: easySudokuSequence, UNASSIGNED: 48, N: 9, SUB_GRID_N: 3);
 
   // this is an hexadoku
@@ -88,10 +88,10 @@ main(List<String> arguments) async {
   //record how much time is consumed for the searching
   final stopwatch = Stopwatch()..start();
 
-  //hexa.solveSudoku(hexa.grid);
+  hexa.solveSudoku(hexa.grid, 0, 0);
 
   // if you want run easy sudoku
-  sudoku.solveSudoku(sudoku.grid);
+//  sudoku.solveSudoku2(sudoku.grid, 0, 0);
   print('time spent: ${stopwatch.elapsed}');
 
 }

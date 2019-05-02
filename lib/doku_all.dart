@@ -82,36 +82,62 @@ class Doku {
     final candidateColumnSet = checkColumn(grid, column);
     final candidateRowSet = checkRow(grid, row);
     final candidateSubGridSet =
-        checkSubGrid(grid, row ~/ SUB_GRID_N, column ~/ SUB_GRID_N);
+    checkSubGrid(grid, row ~/ SUB_GRID_N, column ~/ SUB_GRID_N);
 
     final candidates = candidateColumnSet
         .intersection(candidateRowSet)
         .intersection(candidateSubGridSet);
     return candidates;
+
   }
 
   // the backbone here, use recursion and Backtracking strategy to solve the problem
-  bool solveSudoku(List<List<int>> grid,) {
-    for (var row = 0; row < N; row++) {
-      for (var column = 0; column < N; column++) {
-        var cell = grid[row][column];
-        if (cell == UNASSIGNED) {
-          var candidates = findCandidates(grid, row, column);
-          if (candidates.isEmpty) {
-            return false;
-          }
+  bool solveSudoku(List<List<int>> grid, int row, int column) {
+    if (row == N - 1 && column == N - 1) { // arrive at the last cell
+      if (grid[row][column] == UNASSIGNED) {
+        var candidates = findCandidates(grid, row, column);
+        if (candidates.isEmpty) {
+          return false;
+        } else {
           for (var candidate in candidates) {
             grid[row][column] = candidate;
-            var smallerGrid = deepCloneList(grid);
-            solveSudoku(smallerGrid);
+            printResult(grid);
           }
         }
-        if (row == N - 1 && column == N - 1) {
-          printResult(grid);
+      } else {
+        printResult(grid);
+      }
+    } else {//not the last cell
+      if (grid[row][column] == UNASSIGNED) {// empty cell, so we assign a candidate and continue
+        var candidates = findCandidates(grid, row, column);
+        if (candidates.isEmpty) {
+          return false;
         }
+        for (var candidate in candidates) {
+          grid[row][column] = candidate;
+          var smallerGrid = deepCloneList(grid);
+          int nRow = row;
+          int nColumn = column;
+          if (column == N - 1) {
+            nColumn = 0;
+            nRow = row + 1;
+          } else {
+            nColumn = column + 1;
+          }
+          solveSudoku(smallerGrid, nRow, nColumn);
+        }
+      } else {//not empty cell, we just advance
+        int nRow = row;
+        int nColumn = column;
+        if (column == N - 1) {
+          nColumn = 0;
+          nRow = row + 1;
+        } else {
+          nColumn = column + 1;
+        }
+        solveSudoku(grid, nRow, nColumn);
       }
     }
-    return true;
   }
 
   /// Returns a boolean which indicates whether it will be legal to assign
